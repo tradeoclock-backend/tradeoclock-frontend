@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trade O’Clock</title>
+  </head>
+
+  <body>
+    <h1>Welcome to Trade O’Clock Frontend</h1>
+    <p>Connecting to backend...</p>
+
+    <script type="module">
+      // Import backend URL
+      import { API } from './api.js';
+
+      // Test connection to backend
+      async function checkBackend() {
+        try {
+          const res = await fetch(`${API}/healthz`);
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          const data = await res.json();
+          console.log('✅ Backend response:', data);
+          document.body.innerHTML += `<p style="color:green;">Backend Connected Successfully!</p>`;
+        } catch (err) {
+          console.error('❌ Connection failed:', err);
+          document.body.innerHTML += `<p style="color:red;">Backend Connection Failed: ${err.message}</p>`;
+        }
+      }
+
+      // Run the test on page load
+      checkBackend();
+    </script>
+  </body>
+</html>
